@@ -1,8 +1,6 @@
 import os
 import smtplib
 import sqlalchemy.exc
-import gunicorn
-import psycopg2
 from datetime import datetime
 from functools import wraps
 from flask import Flask, abort, render_template, redirect, url_for, flash, request
