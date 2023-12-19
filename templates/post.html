@@ -1,0 +1,79 @@
+{% include "header.html" %}
+{% from "bootstrap5/form.html" import render_form %}
+
+<!-- Page Header-->
+<header class="masthead" style="background-image: url('{{post.img_url}}')">
+  <div class="container position-relative px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-7">
+        <div class="post-heading">
+          <h1>{{ post.title }}</h1>
+          <h2 class="subheading">{{ post.subtitle }}</h2>
+          <span class="meta">Posted by
+            <a href="#!">{{ post.author.name }}</a>
+            on {{ post.date }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Post Content -->
+<article>
+  <div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-7">
+        {{ post.body|safe }}
+
+        {% if is_admin %}
+        <!-- Edit Post -->
+        <div class="d-flex justify-content-end mb-4">
+          <div class="w-30">
+            <a class="btn btn-primary w-100" href="{{ url_for('edit_post', post_id=post.id) }}">Edit
+              Post</a>
+          </div>
+        </div>
+
+        <!-- Delete Post -->
+        <div class="d-flex justify-content-end mb-4">
+          <div class="w-30">
+            <a class="btn btn-danger text-uppercase w-100"
+              href="{{ url_for('delete_post', post_id=post.id) }}">Delete
+              Post ✕</a>
+          </div>
+        </div>
+        {% endif %}
+
+        <div class="comment">
+          {{ render_form(form, novalidate=True, button_map={'submit': 'primary'}) }}
+          <!-- TODO: Show all the comments on a post -->
+          <ul class="commentList">
+            {% for comment in comments %}
+            <li>
+              <div class="commentContent">
+                <div class="commenterImage">
+                  <img src="{{ grav_func(comment.comment_author.email) }}" width="30px"
+                    height="30px">
+                </div>
+                <div class="commentText">
+                  <p>{{ comment.text }}</p>
+                  <div class="date sub-text">{{ comment.comment_author.name }}</div>
+                  <div class="date sub-text">{{ td_func(comment.date_commented) }}</div>
+                </div>
+              </div>
+              {% if is_admin or comment.author_id == current_user.id%}
+              <div class="commentDelete">
+                <a href="{{ url_for('delete_comment', comment_id=comment.id) }}">✕</a>
+              </div>
+              {% endif %}
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+{% include "footer.html" %}
