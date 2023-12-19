@@ -24,7 +24,6 @@
           <h2 class="post-title">{{ post.title }}</h2>
           <h3 class="post-subtitle">{{ post.subtitle }}</h3>
         </a>
-        <!-- TODO: Add code to delete posts below -->
         <p class="post-meta">
           Posted by
           <!-- post.author is a User object -->
@@ -39,7 +38,6 @@
       <!-- New Post -->
       {% if is_admin %}
       <div class="d-flex justify-content-end mb-4">
-        <!-- TODO: Adding new posts -->
         <div class="w-30">
           <a class="btn btn-primary w-100" href="{{ url_for('add_new_post') }}">Create
             New Post</a>

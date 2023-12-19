@@ -47,7 +47,6 @@
 
         <div class="comment">
           {{ render_form(form, novalidate=True, button_map={'submit': 'primary'}) }}
-          <!-- TODO: Show all the comments on a post -->
           <ul class="commentList">
             {% for comment in comments %}
             <li>
