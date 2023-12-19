@@ -21,7 +21,7 @@ Bootstrap5(app)
 admin_id = "admin@email.com"
 
 # CONNECT TO DB
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///posts.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DB_URI', 'sqlite:///posts.db')
 db = SQLAlchemy()
 db.init_app(app)
 
@@ -369,4 +369,4 @@ def contact():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    app.run(debug=False, port=5000)
